@@ -1,10 +1,67 @@
-# Forked from [h2oai/db-benchmark](https://github.com/h2oai/db-benchmark)
+# db-benchmark-py: Modernized Database Benchmarking
+
+> **Forked from [h2oai/db-benchmark](https://github.com/h2oai/db-benchmark)** • **Maintained by [DuckDB Labs](https://github.com/duckdblabs/db-benchmark)**
+
+**⚡ Modern Python tooling for the comprehensive database benchmarking suite**
+
+This project builds upon the excellent foundational work of H2O.ai and DuckDB Labs, making their comprehensive database benchmark more accessible with modern Python tooling while preserving the full multi-language capabilities.
+
+## 🎯 Project Status: Phase 1 Foundation (In Progress)
+
+✅ **Completed:**
+- Modern Python package structure with `uv` dependency management
+- Core dependencies installed: pandas, polars, psutil, rich, typer, pydantic
+- Benchmark-specific configuration in `pyproject.toml`
+- Cross-platform Python 3.9+ compatibility
+- Optional dependency groups: `dev`, `reporting`
+
+🚧 **Current Phase:**
+- [ ] Python data generation equivalent to R scripts
+- [ ] Cross-platform justfile for task automation
+- [ ] Python solution implementations
+- [ ] Unified reporting system
+
+## 🚀 Quick Start (Python Package)
+
+```bash
+# Install the modern Python package (when ready)
+pip install git+https://github.com/databooth/db-benchmark-py.git
+db-benchmark generate-data --size=1e7
+db-benchmark run --solutions=pandas,polars
+```
+
+## 🏗️ Development Setup
+
+```bash
+# Clone and setup development environment
+git clone https://github.com/databooth/db-benchmark-py.git
+cd db-benchmark-py
+
+# Install with uv (recommended)
+uv sync --extra dev --extra reporting
+
+# Or with pip
+pip install -e ".[dev,reporting]"
+
+# Test the setup
+uv run db-benchmark  # Should show: "Hello from db-benchmark-py!"
+```
+
+## 📖 Documentation
+
+- **[Modernization Plan](README_databooth.md)** - Vision and roadmap for the Python-first approach
+- **[References & Related Work](REFERENCES.md)** - Comprehensive benchmark landscape
+- **[WARP.md](WARP.md)** - AI assistant guidance for working with this codebase
+
+---
+
+# Original Documentation
 
 Repository for reproducible benchmarking of database-like operations in single-node environment.  
 Benchmark report is available at [duckdblabs.github.io/db-benchmark](https://duckdblabs.github.io/db-benchmark).  
 We focused mainly on portability and reproducibility. Benchmark is routinely re-run to present up-to-date timings. Most of solutions used are automatically upgraded to their stable or development versions.  
 This benchmark is meant to compare scalability both in data volume and data complexity.  
-Contribution and feedback are very welcome!  
+Contribution and feedback are very welcome!
 
 # Tasks
 
