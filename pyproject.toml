@@ -1,0 +1,79 @@
+[project]
+name = "db-benchmark-py"
+version = "0.1.2"
+description = "Database benchmark suite - modernised Python tooling for H2O.ai/DuckDB Labs db-benchmark"
+readme = "README.md"
+authors = [{ name = "Michael Booth", email = "michael@databooth.com.au" }]
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=2.3.2",
+    "polars>=1.33.1",
+    "psutil>=7.0.0",
+    "pydantic>=2.11.9",
+    "pydantic-settings>=2.10.1",
+    "rich>=14.1.0",
+    "typer>=0.17.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/databooth/db-benchmark-py"
+Repository = "https://github.com/databooth/db-benchmark-py"
+Documentation = "https://github.com/databooth/db-benchmark-py#readme"
+"Bug Tracker" = "https://github.com/databooth/db-benchmark-py/issues"
+"Original Project" = "https://github.com/duckdblabs/db-benchmark"
+
+[project.scripts]
+db-benchmark = "db_benchmark_py:main"
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.18.1",
+    "pytest>=8.4.2",
+    "pytest-benchmark>=5.1.0",
+    "ruff>=0.13.0",
+]
+reporting = [
+    "jinja2>=3.1.6",
+    "matplotlib>=3.9.4",
+    "plotly>=6.3.0",
+    "seaborn>=0.13.2",
+]
+
+# Benchmark-specific configuration
+[tool.benchmark]
+# Core benchmark settings
+python_version = "3.11" # Recommended version for reproducibility
+solutions = ["pandas", "polars", "duckdb"]
+tasks = ["groupby", "join"]
+data_sizes = [1_000_000, 10_000_000, 100_000_000]
+
+# Data generation settings
+[tool.benchmark.data]
+groupby_k_values = [100, 10, 2] # Number of unique groups (1e2, 1e1, 2e0)
+na_percentages = [0, 5] # Percentage of NAs to inject
+sort_options = [false, true] # Whether to sort generated data
+output_formats = ["csv"] # Data output formats
+
+# System and performance settings
+[tool.benchmark.system]
+memory_limit_gb = 8 # Memory limit for benchmarks
+cpu_threads = "auto" # CPU threads ('auto' or specific number)
+timeout_minutes = 30 # Default timeout per benchmark
+swap_check = true # Verify swap is disabled before running
+
+# Output and reporting settings
+[tool.benchmark.output]
+results_dir = "results"
+log_formats = ["csv", "json"] # Output formats for timing data
+report_formats = ["qmd", "html"] # Report generation formats
+include_system_info = true # Include detailed system information
+
+# Validation settings
+[tool.benchmark.validation]
+checksum_validation = true # Validate result checksums across solutions
+timing_runs = 2 # Number of timing runs per query (matches original)
+precision_digits = 6 # Decimal precision for validation
+
+[build-system]
+requires = ["uv_build>=0.8.15,<0.9.0"]
+build-backend = "uv_build"
